@@ -48,7 +48,7 @@
       <div style="padding: 1rem 1rem;">
         <div>
           <div class="artplayer-app" style="width: auto; height: 60vh; position: relative;"></div>
-          <table class="timeline" cellpadding="10px" cellspacing="0"></table>
+          <table class="timeline" cellpadding="10px" cellspacing="0" style="width: 100%"></table>
         </div>
         <script>
           var danmaku_area = 0.05
@@ -226,6 +226,7 @@
 
                 timeButtonTd = document.createElement('td');
                 timeButtonTd.innerText = new Date(time * 1000).toISOString().substr(11, 8);
+                timeButtonTd.style.width = "60px";
                 timeTextTd = document.createElement('td');
                 timeTextTd.innerText = text;
 
