@@ -122,10 +122,10 @@
   const timeRegex = /^(\d{1})\:([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
   const timeRegex2 = /^([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
   execButton.onclick = function () {
-    const inputStrList1 = inputBox1.value.split(/[(\r\n)\r\n]+/);
-    const inputStrList2 = inputBox2.value.split(/[(\r\n)\r\n]+/);
-    const inputStrList3 = inputBox3.value.split(/[(\r\n)\r\n]+/);
-    const inputStrList4 = inputBox4.value.split(/[(\r\n)\r\n]+/);
+    const inputStrList1 = inputBox1.value.split(/\n+/);
+    const inputStrList2 = inputBox2.value.split(/\n+/);
+    const inputStrList3 = inputBox3.value.split(/\n+/);
+    const inputStrList4 = inputBox4.value.split(/\n+/);
 
     const offsetRaw1 = -(parseInt(rawTimeBoxH.value) * 3600 + parseInt(rawTimeBoxM.value) * 60 + parseInt(rawTimeBoxS
       .value));

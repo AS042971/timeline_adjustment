@@ -38,7 +38,7 @@
   const timeRegex = /^(\d{1})\:([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
   const timeRegex2 = /^([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
   execButton.onclick = function () {
-    const inputStrList = inputBox.value.split(/[(\r\n)\r\n]+/);
+    const inputStrList = inputBox.value.split(/\n+/);
     var dH = parseInt(timeBoxH.value)
     var dM = parseInt(timeBoxM.value)
     var dS = parseInt(timeBoxS.value)
