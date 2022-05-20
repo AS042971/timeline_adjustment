@@ -35,8 +35,8 @@
   const timeBoxS = document.getElementById("timeBoxS");
   const timeChoice1 = document.getElementById("timeChoice1");
 
-  const timeRegex = /^(\d{1})\:([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
-  const timeRegex2 = /^([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
+  const timeRegex = /^([0-2]?\d{1})\:([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
+  const timeRegex2 = /^([0-5]?\d{1})\:([0-5]{1}\d{1})$/
   execButton.onclick = function () {
     const inputStrList = inputBox.value.split(/\n+/);
     var dH = parseInt(timeBoxH.value)
