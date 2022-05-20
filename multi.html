@@ -119,8 +119,8 @@
   outputBox3.value = "";
   outputBox4.value = "";
 
-  const timeRegex = /^(\d{1})\:([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
-  const timeRegex2 = /^([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
+  const timeRegex = /^([0-2]?\d{1})\:([0-5]{1}\d{1})\:([0-5]{1}\d{1})$/
+  const timeRegex2 = /^([0-5]?\d{1})\:([0-5]{1}\d{1})$/
   execButton.onclick = function () {
     const inputStrList1 = inputBox1.value.split(/\n+/);
     const inputStrList2 = inputBox2.value.split(/\n+/);
