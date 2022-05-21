@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+  <table style="width:100%">
+    <tr colspan="2">
+      <div>
+      </div>
+    </tr>
+    <tr colspan="2">
+      <div style="display: inline-block">
+        <label for="openingBJTime">开场北京时间:</label>
+        <input id="openingBJTime">
+
+        <label for="syncSource">同步源:</label>
+        <select id="syncSource">
+          <option value="自家">自家</option>
+          <option value="计画">二创计画</option>
+          <option value="YTB">Youtube</option>
+        </select>
+
+        <label>开场时刻:</label>
+        <input type="number" id="targetTimeBoxH" value="0" min="0" max="5" style="width: 40px" />:
+        <input type="number" id="targetTimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
+        <input type="number" id="targetTimeBoxS" value="0" min="0" max="59" style="width: 40px" />
+
+        <label>P1时长:</label>
+        <input type="number" id="targetP1TimeBoxH" value="0" min="0" max="5" style="width: 40px" />:
+        <input type="number" id="targetP1TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
+        <input type="number" id="targetP1TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
+
+        <label>P2时长:</label>
+        <input type="number" id="targetP2TimeBoxH" value="0" min="0" max="5" style="width: 40px" />:
+        <input type="number" id="targetP2TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
+        <input type="number" id="targetP2TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
+
+        <label>统一向前移动</label>
+        <input type="number" id="timeShifting" value="10" min="0" max="30" style="width: 40px" />秒
+
+        <button id="execButton">获取参考时间</button>
+        <button id="copyButton">复制</button>
+      </div>
+    </tr>
+    <tr>
+      <td><textarea name="input" id="inputBox" rows="30" style="width:100%"> </textarea></td>
+      <td><textarea name="output" id="outputBox" rows="30" style="width:100%"> </textarea></td>
+    </tr>
+
+  </table>
+
+</body>
+<script>
+  const openingBox = document.getElementById("openingBJTime");
+  const shiftBox = document.getElementById("timeShifting");
+  const inputBox = document.getElementById("inputBox");
+  const outputBox = document.getElementById("outputBox");
+  const execButton = document.getElementById("execButton");
+  const copyButton = document.getElementById("copyButton");
+  const timeBoxH = document.getElementById("targetTimeBoxH");
+  const timeBoxM = document.getElementById("targetTimeBoxM");
+  const timeBoxS = document.getElementById("targetTimeBoxS");
+  const P1timeBoxH = document.getElementById("targetP1TimeBoxH");
+  const P1timeBoxM = document.getElementById("targetP1TimeBoxM");
+  const P1timeBoxS = document.getElementById("targetP1TimeBoxS");
+  const P2timeBoxH = document.getElementById("targetP2TimeBoxH");
+  const P2timeBoxM = document.getElementById("targetP2TimeBoxM");
+  const P2timeBoxS = document.getElementById("targetP2TimeBoxS");
+  const sourceBox = document.getElementById("syncSource")
+
+  const getTime = function(line) {
+    const timeRegex = /([0-2]?\d{1})\:([0-5]{1}\d{1})\:([0-5]{1}\d{1})/
+    const timeRegex2 = /([0-5]?\d{1})\:([0-5]{1}\d{1})/
+    const result1 = line.match(timeRegex)
+    if (result1) {
+      return parseInt(result1[1])*3600 + parseInt(result1[2])*60 + parseInt(result1[3]);
+    }
+    const result2 = line.match(timeRegex2)
+    if (result2) {
+      return parseInt(result2[1])*60 + parseInt(result2[2]);
+    }
+    return 0;
+  }
+
+  execButton.onclick = function () {
+    // 获取基础信息
+    const openingBJTime = getTime(openingBox.value);
+    console.log(openingBJTime)
+    const shift = parseInt(shiftBox.value)
+
+    const openingTime = parseInt(timeBoxH.value) * 3600 + parseInt(timeBoxM.value) * 60 + parseInt(timeBoxS.value);
+    const p1Time = parseInt(P1timeBoxH.value) * 3600 + parseInt(P1timeBoxM.value) * 60 + parseInt(P1timeBoxS.value);
+    const p2Time = parseInt(P2timeBoxH.value) * 3600 + parseInt(P2timeBoxM.value) * 60 + parseInt(P2timeBoxS.value);
+
+    const selectedIndex = sourceBox.selectedIndex;
+
+    const inputStrList = inputBox.value.split(/\n+/);
+    var outputStrList = [];
+    inputStrList.forEach(inputStr => {
+      let time = getTime(inputStr);
+      if (time == 0) {
+        outputStrList.push('');
+        return;
+      }
+
+      time -= openingBJTime;
+      time -= shift;
+      time += openingTime;
+
+      source = ""
+
+      if (p1Time == 0 || time < p1Time || selectedIndex == 2) {
+        if (selectedIndex == 0) {
+          source = "P1 (自家)"
+        } else if (selectedIndex == 1) {
+          source = "P1 (计画)"
+        } else {
+          source = "YTB"
+        }
+      } else {
+        time -= p1Time;
+        if (p2Time == 0 || time < p2Time) {
+          if (selectedIndex == 0) {
+            source = "P2 (自家)"
+          } else {
+            source = "P2 (计画)"
+          }
+        } else {
+          time -= p2Time;
+          if (selectedIndex == 0) {
+            source = "P3 (自家)"
+          } else {
+            source = "P3 (计画)"
+          }
+        }
+      }
+
+      if (time < 0) {
+        time = 0
+      }
+
+      outputStrList.push(source + "\t" + Math.floor(time / 3600) + "\t" + Math.floor((time % 3600) / 60))
+    });
+    outputBox.value = outputStrList.join("\n");
+  }
+  copyButton.onclick = function () {
+    outputBox.select();
+    document.execCommand('copy');
+  }
+</script>
+
+</html>
