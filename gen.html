@@ -142,7 +142,7 @@
         time = 0
       }
 
-      outputStrList.push(source + "\t" + Math.floor(time / 3600) + "\t" + Math.floor((time % 3600) / 60) + "\t-" + (Math.floor((time % 60) / 10) * 10))
+      outputStrList.push(source + "\t" + Math.floor(time / 3600) + "\t" + Math.floor((time % 3600) / 60) + "\t-" + (max(Math.floor((time % 60) / 10) * 10,1)))
     });
     outputBox.value = outputStrList.join("\n");
   }
