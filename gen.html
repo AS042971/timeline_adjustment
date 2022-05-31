@@ -18,7 +18,7 @@
 
         <label for="syncSource">同步源:</label>
         <select id="syncSource">
-          <option value="自家">自家</option>
+          <option value="余烬">余烬录播组</option>
           <option value="计画">二创计画</option>
           <option value="YTB">Youtube</option>
         </select>
@@ -114,7 +114,7 @@
 
       if (p1Time == 0 || time < p1Time || selectedIndex == 2) {
         if (selectedIndex == 0) {
-          source = "P1 (自家)"
+          source = "P1 (余烬)"
         } else if (selectedIndex == 1) {
           source = "P1 (计画)"
         } else {
@@ -124,14 +124,14 @@
         time -= p1Time;
         if (p2Time == 0 || time < p2Time) {
           if (selectedIndex == 0) {
-            source = "P2 (自家)"
+            source = "P2 (余烬)"
           } else {
             source = "P2 (计画)"
           }
         } else {
           time -= p2Time;
           if (selectedIndex == 0) {
-            source = "P3 (自家)"
+            source = "P3 (余烬)"
           } else {
             source = "P3 (计画)"
           }
