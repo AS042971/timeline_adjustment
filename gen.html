@@ -102,7 +102,15 @@
     const inputStrList = inputBox.value.split(/\n+/);
     var outputStrList = [];
     inputStrList.forEach(inputStr => {
-      let time = getTime(inputStr);
+      let timeStr = inputStr;
+      let rawSplit = inputStr.split('\t');
+      let extraDelta = 0;
+      if (rawSplit.length >= 2) {
+        timeStr = rawSplit[0];
+        extraDelta = parseInt(rawSplit[1]);
+      }
+      
+      let time = getTime(timeStr);
       if (time == 0) {
         outputStrList.push('');
         return;
@@ -110,6 +118,7 @@
 
       time -= openingBJTime;
       time -= shift;
+      time -= extraDelta;
       time += openingTime;
 
       source = ""
