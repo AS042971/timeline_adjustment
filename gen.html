@@ -41,7 +41,7 @@
         <input type="number" id="targetP2TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
 
         <label>统一向前移动</label>
-        <input type="number" id="timeShifting" value="15" min="0" max="30" style="width: 40px" />秒
+        <input type="number" id="timeShifting" value="15" min="-60" max="60" style="width: 40px" />秒
 
         <button id="execButton">获取参考时间</button>
         <button id="copyButton">复制</button>
@@ -160,7 +160,7 @@
         time = 0
       }
 
-      outputStrList.push(source + "\t" + Math.floor(time / 3600) + "\t" + Math.floor((time % 3600) / 60) + "\t-" + (Math.max(Math.floor((time % 60) / 10) * 10,1)))
+      outputStrList.push(source + "\t" + Math.floor(time / 3600) + "\t" + Math.floor((time % 3600) / 60) + "\t-" + (Math.max(time % 60,1)))
     });
     outputBox.value = outputStrList.join("\n");
   }
