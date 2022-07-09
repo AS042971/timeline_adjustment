@@ -100,7 +100,6 @@
   execButton.onclick = function () {
     // 获取基础信息
     const openingBJTime = getTime(openingBox.value);
-    console.log(openingBJTime)
     const shift = parseInt(shiftBox.value)
 
     const openingTime = parseInt(timeBoxH.value) * 3600 + parseInt(timeBoxM.value) * 60 + parseInt(timeBoxS.value);
@@ -128,9 +127,14 @@
         return;
       }
 
-      time -= openingBJTime;
-      time -= shift;
-      time -= extraDelta;
+      if (openingBJTime) {
+        time -= openingBJTime;
+        time -= shift;
+        time -= extraDelta;
+      } else {
+        time -= extraDelta;
+        openingBJTime = time
+      }
       time += openingTime;
 
       source = ""
