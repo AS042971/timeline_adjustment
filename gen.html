@@ -90,7 +90,7 @@
   }
 
   inputBox.onchange = function() {
-    if (inputBox.value.contains("\t")) {
+    if (inputBox.value.includes("\t")) {
       shiftBox.value = 0;
     } else {
       shiftBox.value = 15;
