@@ -91,15 +91,17 @@
 
   inputBox.onchange = function() {
     if (inputBox.value.includes("\t")) {
-      shiftBox.value = 0;
+      shiftBox.value = "0";
+      shiftBox.setAttribute('value', "0");
     } else {
-      shiftBox.value = 15;
+      shiftBox.value = "15";
+      shiftBox.setAttribute('value', "15");
     }
   }
 
   execButton.onclick = function () {
     // 获取基础信息
-    const openingBJTime = getTime(openingBox.value);
+    let openingBJTime = getTime(openingBox.value);
     const shift = parseInt(shiftBox.value)
 
     const openingTime = parseInt(timeBoxH.value) * 3600 + parseInt(timeBoxM.value) * 60 + parseInt(timeBoxS.value);
