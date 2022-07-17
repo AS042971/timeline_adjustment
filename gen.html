@@ -42,6 +42,11 @@
         <input type="number" id="targetP2TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
         <input type="number" id="targetP2TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
 
+        <label>P3时长:</label>
+        <input type="number" id="targetP3TimeBoxH" value="0" min="0" max="5" style="width: 40px" />:
+        <input type="number" id="targetP3TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
+        <input type="number" id="targetP3TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
+
         <label>统一向前移动</label>
         <input type="number" id="timeShifting" value="15" min="-60" max="60" style="width: 40px" />秒
 
@@ -73,6 +78,9 @@
   const P2timeBoxH = document.getElementById("targetP2TimeBoxH");
   const P2timeBoxM = document.getElementById("targetP2TimeBoxM");
   const P2timeBoxS = document.getElementById("targetP2TimeBoxS");
+  const P3timeBoxH = document.getElementById("targetP3TimeBoxH");
+  const P3timeBoxM = document.getElementById("targetP3TimeBoxM");
+  const P3timeBoxS = document.getElementById("targetP3TimeBoxS");
   const sourceBox = document.getElementById("syncSource")
 
   const getTime = function(line) {
@@ -107,6 +115,7 @@
     const openingTime = parseInt(timeBoxH.value) * 3600 + parseInt(timeBoxM.value) * 60 + parseInt(timeBoxS.value);
     const p1Time = parseInt(P1timeBoxH.value) * 3600 + parseInt(P1timeBoxM.value) * 60 + parseInt(P1timeBoxS.value);
     const p2Time = parseInt(P2timeBoxH.value) * 3600 + parseInt(P2timeBoxM.value) * 60 + parseInt(P2timeBoxS.value);
+    const p3Time = parseInt(P3timeBoxH.value) * 3600 + parseInt(P3timeBoxM.value) * 60 + parseInt(P3timeBoxS.value);
 
     const selectedIndex = sourceBox.selectedIndex;
 
@@ -178,20 +187,39 @@
           }
         } else {
           time -= p2Time;
-          if (selectedIndex == 0) {
-            source = "P3 (余烬)"
-          } else if (selectedIndex == 1) {
-            source = "P3 (计画)"
-          } else if (selectedIndex == 2) {
-            source = "P3 (颂歌)"
-          } else if (selectedIndex == 3) {
-            source = "P3 (菲利斯)"
-          } else if (selectedIndex == 4) {
-            source = "P3 (本地)"
-          } else if (selectedIndex == 5) {
-            source = "YTB"
+          if (p3Time == 0 || time < p3Time) {
+            if (selectedIndex == 0) {
+              source = "P3 (余烬)"
+            } else if (selectedIndex == 1) {
+              source = "P3 (计画)"
+            } else if (selectedIndex == 2) {
+              source = "P3 (颂歌)"
+            } else if (selectedIndex == 3) {
+              source = "P3 (菲利斯)"
+            } else if (selectedIndex == 4) {
+              source = "P3 (本地)"
+            } else if (selectedIndex == 5) {
+              source = "YTB"
+            } else {
+              source = "P3 (其他)"
+            }
           } else {
-            source = "P3 (其他)"
+            time -= p3Time;
+            if (selectedIndex == 0) {
+              source = "P4 (余烬)"
+            } else if (selectedIndex == 1) {
+              source = "P4 (计画)"
+            } else if (selectedIndex == 2) {
+              source = "P4 (颂歌)"
+            } else if (selectedIndex == 3) {
+              source = "P4 (菲利斯)"
+            } else if (selectedIndex == 4) {
+              source = "P4 (本地)"
+            } else if (selectedIndex == 5) {
+              source = "YTB"
+            } else {
+              source = "P4 (其他)"
+            }
           }
         }
       }
