@@ -18,13 +18,26 @@
 
         <label for="syncSource">同步源:</label>
         <select id="syncSource">
-          <option value="余烬">余烬录播组</option>
-          <option value="计画">二创计画</option>
-          <option value="颂歌">圣嘉然的颂歌</option>
-          <option value="菲利斯">菲利斯</option>
-          <option value="本地">本地录制（不同源）</option>
-          <option value="YTB">Youtube</option>
-          <option value="其他">（其他录播源）</option>
+          <optgroup label="A-Soul录播">
+            <option value="余烬">余烬录播组</option>
+            <option value="计画">A-Soul二创计画</option>
+            <option value="颂歌">圣嘉然的颂歌</option>
+            <option value="菲利斯">菲利斯</option>
+          </optgroup>
+          <optgroup label="EOE录播">
+            <option value="哎呀米诺">哎呀米诺录播组</option>
+            <option value="斯黛拉">小小斯黛拉</option>
+          </optgroup>
+          <optgroup label="啵啵小狗341录播">
+            <option value="啵新社">啵新社</option>
+            <option value="明弦正">明弦正</option>
+            <option value="苏打">o苏打o</option>
+          </optgroup>
+          <optgroup label="通用">
+            <option value="本地">本地录制（不同源）</option>
+            <option value="YTB">Youtube</option>
+            <option value="其他">（其他录播源）</option>
+          </optgroup>
         </select>
 
         <label>开场时刻:</label>
@@ -55,8 +68,8 @@
       </div>
     </tr>
     <tr>
-      <td><textarea name="input" id="inputBox" rows="30" style="width:100%"> </textarea></td>
-      <td><textarea name="output" id="outputBox" rows="30" style="width:100%"> </textarea></td>
+      <td><textarea name="input" id="inputBox" rows="30" style="width:100%"></textarea></td>
+      <td><textarea name="output" id="outputBox" rows="30" style="width:100%"></textarea></td>
     </tr>
 
   </table>
@@ -131,7 +144,7 @@
           extraDelta = parseInt(rawSplit[1]);
         }
       }
-      
+
       let time = getTime(timeStr);
       if (time == 0) {
         outputStrList.push('');
@@ -151,75 +164,19 @@
 
       source = ""
 
-      if (p1Time == 0 || time < p1Time || selectedIndex == 5) {
-        if (selectedIndex == 0) {
-          source = "P1 (余烬)"
-        } else if (selectedIndex == 1) {
-          source = "P1 (计画)"
-        } else if (selectedIndex == 2) {
-          source = "P1 (颂歌)"
-        } else if (selectedIndex == 3) {
-          source = "P1 (菲利斯)"
-        } else if (selectedIndex == 4) {
-          source = "P1 (本地)"
-        } else if (selectedIndex == 5) {
-          source = "YTB"
-        } else {
-          source = "P1 (其他)"
-        }
+      if (p1Time == 0 || time < p1Time) {
+        source = "P1 (" + sourceBox.value + ")"
       } else {
         time -= p1Time;
         if (p2Time == 0 || time < p2Time) {
-          if (selectedIndex == 0) {
-            source = "P2 (余烬)"
-          } else if (selectedIndex == 1) {
-            source = "P2 (计画)"
-          } else if (selectedIndex == 2) {
-            source = "P2 (颂歌)"
-          } else if (selectedIndex == 3) {
-            source = "P2 (菲利斯)"
-          } else if (selectedIndex == 4) {
-            source = "P2 (本地)"
-          } else if (selectedIndex == 5) {
-            source = "YTB"
-          } else {
-            source = "P2 (其他)"
-          }
+          source = "P2 (" + sourceBox.value + ")"
         } else {
           time -= p2Time;
           if (p3Time == 0 || time < p3Time) {
-            if (selectedIndex == 0) {
-              source = "P3 (余烬)"
-            } else if (selectedIndex == 1) {
-              source = "P3 (计画)"
-            } else if (selectedIndex == 2) {
-              source = "P3 (颂歌)"
-            } else if (selectedIndex == 3) {
-              source = "P3 (菲利斯)"
-            } else if (selectedIndex == 4) {
-              source = "P3 (本地)"
-            } else if (selectedIndex == 5) {
-              source = "YTB"
-            } else {
-              source = "P3 (其他)"
-            }
+            source = "P3 (" + sourceBox.value + ")"
           } else {
             time -= p3Time;
-            if (selectedIndex == 0) {
-              source = "P4 (余烬)"
-            } else if (selectedIndex == 1) {
-              source = "P4 (计画)"
-            } else if (selectedIndex == 2) {
-              source = "P4 (颂歌)"
-            } else if (selectedIndex == 3) {
-              source = "P4 (菲利斯)"
-            } else if (selectedIndex == 4) {
-              source = "P4 (本地)"
-            } else if (selectedIndex == 5) {
-              source = "YTB"
-            } else {
-              source = "P4 (其他)"
-            }
+            source = "P4 (" + sourceBox.value + ")"
           }
         }
       }
