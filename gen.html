@@ -60,6 +60,21 @@
         <input type="number" id="targetP3TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
         <input type="number" id="targetP3TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
 
+        <label>P4时长:</label>
+        <input type="number" id="targetP4TimeBoxH" value="0" min="0" max="5" style="width: 40px" />:
+        <input type="number" id="targetP4TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
+        <input type="number" id="targetP4TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
+
+        <label>P5时长:</label>
+        <input type="number" id="targetP5TimeBoxH" value="0" min="0" max="5" style="width: 40px" />:
+        <input type="number" id="targetP5TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
+        <input type="number" id="targetP5TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
+
+        <label>P6时长:</label>
+        <input type="number" id="targetP6TimeBoxH" value="0" min="0" max="5" style="width: 40px" />:
+        <input type="number" id="targetP6TimeBoxM" value="0" min="0" max="59" style="width: 40px" />:
+        <input type="number" id="targetP6TimeBoxS" value="0" min="0" max="59" style="width: 40px" />
+
         <label>统一向前移动</label>
         <input type="number" id="timeShifting" value="15" min="-60" max="60" style="width: 40px" />秒
 
@@ -94,6 +109,15 @@
   const P3timeBoxH = document.getElementById("targetP3TimeBoxH");
   const P3timeBoxM = document.getElementById("targetP3TimeBoxM");
   const P3timeBoxS = document.getElementById("targetP3TimeBoxS");
+  const P4timeBoxH = document.getElementById("targetP4TimeBoxH");
+  const P4timeBoxM = document.getElementById("targetP4TimeBoxM");
+  const P4timeBoxS = document.getElementById("targetP4TimeBoxS");
+  const P5timeBoxH = document.getElementById("targetP5TimeBoxH");
+  const P5timeBoxM = document.getElementById("targetP5TimeBoxM");
+  const P5timeBoxS = document.getElementById("targetP5TimeBoxS");
+  const P6timeBoxH = document.getElementById("targetP6TimeBoxH");
+  const P6timeBoxM = document.getElementById("targetP6TimeBoxM");
+  const P6timeBoxS = document.getElementById("targetP6TimeBoxS");
   const sourceBox = document.getElementById("syncSource")
 
   const getTime = function(line) {
@@ -101,7 +125,12 @@
     const timeRegex2 = /([0-5]?\d{1})\:([0-5]{1}\d{1})/
     const result1 = line.match(timeRegex)
     if (result1) {
-      return parseInt(result1[1])*3600 + parseInt(result1[2])*60 + parseInt(result1[3]);
+      base = parseInt(result1[1])*3600 + parseInt(result1[2])*60 + parseInt(result1[3]);
+      if (parseInt(result1[1]) <= 8) {
+        return base + 24 * 3600
+      } else {
+        return base
+      }
     }
     const result2 = line.match(timeRegex2)
     if (result2) {
@@ -129,6 +158,9 @@
     const p1Time = parseInt(P1timeBoxH.value) * 3600 + parseInt(P1timeBoxM.value) * 60 + parseInt(P1timeBoxS.value);
     const p2Time = parseInt(P2timeBoxH.value) * 3600 + parseInt(P2timeBoxM.value) * 60 + parseInt(P2timeBoxS.value);
     const p3Time = parseInt(P3timeBoxH.value) * 3600 + parseInt(P3timeBoxM.value) * 60 + parseInt(P3timeBoxS.value);
+    const p4Time = parseInt(P4timeBoxH.value) * 3600 + parseInt(P4timeBoxM.value) * 60 + parseInt(P4timeBoxS.value);
+    const p5Time = parseInt(P5timeBoxH.value) * 3600 + parseInt(P5timeBoxM.value) * 60 + parseInt(P5timeBoxS.value);
+    const p6Time = parseInt(P6timeBoxH.value) * 3600 + parseInt(P6timeBoxM.value) * 60 + parseInt(P6timeBoxS.value);
 
     const selectedIndex = sourceBox.selectedIndex;
 
@@ -176,7 +208,22 @@
             source = "P3 (" + sourceBox.value + ")"
           } else {
             time -= p3Time;
-            source = "P4 (" + sourceBox.value + ")"
+            if (p4Time == 0 || time < p4Time) {
+              source = "P4 (" + sourceBox.value + ")"
+            } else {
+              time -= p4Time;
+              if (p5Time == 0 || time < p5Time) {
+                source = "P5 (" + sourceBox.value + ")"
+              } else {
+                time -= p5Time;
+                if (p6Time == 0 || time < p6Time) {
+                  source = "P6 (" + sourceBox.value + ")"
+                } else {
+                  time -= p6Time;
+                  source = "P7 (" + sourceBox.value + ")"
+                }
+              }
+            }
           }
         }
       }
