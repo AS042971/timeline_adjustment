@@ -19,8 +19,8 @@
         <label for="syncSource">同步源:</label>
         <select id="syncSource">
           <optgroup label="A-Soul录播">
-            <option value="余烬">余烬录播组</option>
             <option value="计画">A-Soul二创计画</option>
+            <option value="余烬">余烬录播组</option>
             <option value="颂歌">圣嘉然的颂歌</option>
             <option value="菲利斯">菲利斯</option>
           </optgroup>
@@ -126,7 +126,7 @@
     const result1 = line.match(timeRegex)
     if (result1) {
       base = parseInt(result1[1])*3600 + parseInt(result1[2])*60 + parseInt(result1[3]);
-      if (parseInt(result1[1]) <= 8) {
+      if (parseInt(result1[1]) <= 4) {
         return base + 24 * 3600
       } else {
         return base
